@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- 다른 스타일 설정... -->
+
+        <!-- BottomSheetDialogFragment의 테마 설정 -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <!-- BottomSheet의 peekHeight 설정 (기본값은 50%이므로 100%로 설정하면 전체화면) -->
+
+        <item name="android:backgroundDimAmount">0.5</item> <!-- 배경 어두운 정도 조절 -->
+    </style>
+
+    <style name="AppBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <!-- peekHeight를 조절하여 BottomSheet의 높이를 설정 -->
+        <item name="behavior_peekHeight">300dp</item>
+        <!-- 다른 속성들을 필요에 따라 설정... -->
+    </style>
+</resources>

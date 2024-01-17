@@ -13,6 +13,7 @@ import com.example.frontsharestorage.DTO.ApiService
 import com.example.frontsharestorage.DTO.GeocodingHelper
 import com.example.frontsharestorage.R
 import com.example.frontsharestorage.databinding.FragmentHomeBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -40,6 +41,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
 
+    private val markers: MutableList<Marker> = mutableListOf()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         geocodingHelper = GeocodingHelper(context)
@@ -59,6 +62,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         binding.SearchingVolunteerButton.setOnClickListener {
             val keyword = binding.SearchingVolunteerEditText.text.toString()
             searchVolunteer(keyword)
+        }
+
+        // recycleButton 클릭 이벤트 처리
+        binding.recycleButton.setOnClickListener {
+            // 모든 마커 제거
+            removeAllMarkers()
+            Log.d("HomeFragment.kt","마커 제거")
         }
 
         val retrofit = Retrofit.Builder()
@@ -88,7 +98,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     "3000000",
                     todayString,
                     endDayString,
-                    "30"
+                    "7"
                 )
 
                 if (response.isSuccessful) {
@@ -129,9 +139,27 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         marker.position = LatLng(latitude, longitude)
         marker.map = naverMap
         marker.icon = MarkerIcons.BLACK
-        //marker.captionText = title
+        marker.captionText = title
+
+        marker.setOnClickListener {
+            showBottomSheet()
+        }
+        // 마커를 리스트에 추가
+        markers.add(marker)
     }
 
+    private fun showBottomSheet(): Boolean {
+        val bottomSheetFragment = MarkerDetailsFragment()
+        bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+        return true
+    }
+
+    private fun removeAllMarkers() {
+        // 리스트에 있는 모든 마커 제거
+        markers.forEach { it.map = null }
+        // 리스트 비우기
+        markers.clear()
+    }
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
     }

@@ -20,11 +20,22 @@
     </ImageView>
 
     <ImageView
+        android:id="@+id/searchEditTextRectangle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/searcheddittext"></ImageView>
+
+    <ImageView
+        android:id="@+id/recycleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="345dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/recyclebutton">
+
+    </ImageView>
     <EditText
         android:id="@+id/SearchingVolunteerEditText"
         android:layout_width="320dp"
