@@ -5,10 +5,14 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("openapi/service/rest/VolunteerPartcptnService/getVltrPartcptnItem")
-    suspend fun getVolunteerDetails(
-        @Query("progrmRegistNo") programRegistNo: String,
-        // 여기에 다른 필요한 파라미터 추가
-        @Query("apiKey") apiKey: String
-    ): Response<DataModel>
+    @GET("VolunteerPartcptnService/getVltrSearchWordList")
+    suspend fun getVolunteerList(
+        @Query("SchCateGu") schCateGu: String,
+        @Query("keyword") keyword: String,
+        @Query("schSign1") schSign1: String,
+        @Query("schprogrmBgnde") schprogrmBgnde: String,
+        @Query("progrmEndde") progrmEndde: String,
+        @Query("numOfRows") numOfRows: String
+    ): Response<OpenApiResponse>
 }
+
