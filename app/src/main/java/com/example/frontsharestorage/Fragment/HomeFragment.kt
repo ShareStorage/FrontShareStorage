@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.frontsharestorage.DTO.ApiService
 import com.example.frontsharestorage.DTO.GeocodingHelper
 import com.example.frontsharestorage.R
@@ -40,8 +44,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
-
     private val markers: MutableList<Marker> = mutableListOf()
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+
+    // BottomSheet layout 변수
+    private val bottomSheetLayout by lazy { binding.bottomSheetLayout }
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,6 +71,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         binding.SearchingVolunteerButton.setOnClickListener {
             val keyword = binding.SearchingVolunteerEditText.text.toString()
             searchVolunteer(keyword)
+            hideKeyboard()
         }
 
         // recycleButton 클릭 이벤트 처리
@@ -78,7 +88,53 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         apiService = retrofit.create(ApiService::class.java)
 
+        initializePersistentBottomSheet()
+        persistentBottomSheetEvent()
+
         return view
+    }
+
+    // Persistent BottomSheet 초기화
+    // Persistent BottomSheet 초기화
+    private fun initializePersistentBottomSheet() {
+
+        // BottomSheetBehavior에 layout 설정
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+        // CoordinatorLayout을 찾아서 CoordinatorLayout에 뷰를 추가
+        val coordinatorLayout = view?.findViewById<CoordinatorLayout>(R.id.coordinatorLayout)
+        coordinatorLayout?.addView(bottomSheetLayout)
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+                // BottomSheetBehavior state에 따른 이벤트
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        Log.d("MainActivity", "state: hidden")
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        Log.d("MainActivity", "state: expanded")
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        Log.d("MainActivity", "state: collapsed")
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        Log.d("MainActivity", "state: dragging")
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                        Log.d("MainActivity", "state: settling")
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        Log.d("MainActivity", "state: half expanded")
+                    }
+                }
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+        })
+
     }
 
     private fun searchVolunteer(keyword: String) {
@@ -142,17 +198,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         marker.captionText = title
 
         marker.setOnClickListener {
-            showBottomSheet()
+
+            fullsizeBottomSheetEvent()
         }
         // 마커를 리스트에 추가
         markers.add(marker)
     }
 
-    private fun showBottomSheet(): Boolean {
-        val bottomSheetFragment = MarkerDetailsFragment()
-        bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
-        return true
-    }
 
     private fun removeAllMarkers() {
         // 리스트에 있는 모든 마커 제거
@@ -160,6 +212,31 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         // 리스트 비우기
         markers.clear()
     }
+    private fun fullsizeBottomSheetEvent(): Boolean {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        return true
+    }
+
+    // PersistentBottomSheet 내부 버튼 click event
+    // PersistentBottomSheet 내부 버튼 click event
+    private fun persistentBottomSheetEvent() {
+//
+//        bottomSheetHidePersistentButton.setOnClickListener {
+//            // BottomSheet 숨김
+//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+//        }
+//
+//        bottomSheetShowModalButton.setOnClickListener {
+//            // 추후 modal bottomSheet 띄울 버튼
+//        }
+
+    }
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
     }
