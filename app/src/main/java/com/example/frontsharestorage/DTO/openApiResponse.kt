@@ -36,6 +36,8 @@ data class Items(
 
     @field:Element(name = "totalCount", required = false)
     var totalCount: String? = "0"
+
+
 )
 
 data class Item(

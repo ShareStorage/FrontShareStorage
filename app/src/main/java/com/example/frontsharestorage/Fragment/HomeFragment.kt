@@ -2,15 +2,12 @@ package com.example.frontsharestorage.Fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.frontsharestorage.DTO.ApiService
@@ -23,7 +20,7 @@ import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.util.MarkerIcons
+import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,11 +43,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private val markers: MutableList<Marker> = mutableListOf()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+    private val markersWithInfo: MutableList<MarkerWithInfo> = mutableListOf()
 
     // BottomSheet layout 변수
     private val bottomSheetLayout by lazy { binding.bottomSheetLayout }
-
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -138,6 +134,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun searchVolunteer(keyword: String) {
+        disableUserInput()
+        showProgressBar()
         GlobalScope.launch(Dispatchers.Main) {
             val today = Calendar.getInstance()
             val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
@@ -154,7 +152,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     "3000000",
                     todayString,
                     endDayString,
-                    "7"
+                    "30"
                 )
 
                 if (response.isSuccessful) {
@@ -170,7 +168,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                                     "Coordinates for Act Place",
                                     "Act Place: $actPlace, Latitude: ${coordinates.first}, Longitude: ${coordinates.second}"
                                 )
-                                addMarker(coordinates.first, coordinates.second, actPlace)
+
+                                GlobalScope.launch(Dispatchers.Main) {
+                                    addMarker(
+                                        coordinates.first,
+                                        coordinates.second,
+                                        item.progrmSj ?: "",
+                                        actPlace,
+                                        item.url ?: "",
+                                        formatDate(item.progrmBgnde ?: ""),
+                                        formatTime(item.actBeginTm ?: ""),
+                                        item.srvcClCode ?: ""
+                                    )
+                                }
                             } else {
                                 Log.d("Coordinates", "Unable to get coordinates for Act Place: $actPlace")
                             }
@@ -178,32 +188,118 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                             Log.d("Coordinates", "Act Place is null or blank for some item.")
                         }
 
+                        val formattedDate = formatDate(item.progrmBgnde ?: "N/A")
+                        val formattedTime = formatTime(item.actBeginTm ?: "N/A")
+
                         Log.d("Program Title", item.progrmSj ?: "N/A")
                         Log.d("Act Place", actPlace ?: "N/A")
+                        Log.d("url", item.url ?: "N/A")
+                        Log.d("progrmBgnde", item.progrmBgnde ?: "N/A")
+                        Log.d("actBeginTm", item.actBeginTm ?: "N/A")
+                        Log.d("srvcClCode", item.srvcClCode ?: "N/A")
+                        enableUserInput()
+                        hideProgressBar()
                     }
                 } else {
                     Log.d("Network Error", "Error: ${response.code()}")
+                    enableUserInput()
+                    hideProgressBar()
                 }
             } catch (e: Exception) {
                 Log.d("Network Exception", e.message ?: "Unknown exception")
+                enableUserInput()
+                hideProgressBar()
             }
         }
     }
 
-    private fun addMarker(latitude: Double, longitude: Double, title: String) {
+    data class MarkerWithInfo(
+        val title: String,
+        val location: String,
+        val url: String,
+        val date: String,
+        val time: String,
+        val field: String
+    ) {
+        fun copy(): MarkerWithInfo {
+            return MarkerWithInfo(title, location, url, date, time, field)
+        }
+    }
+
+// ...
+
+    private fun addMarker(
+        latitude: Double,
+        longitude: Double,
+        title: String,
+        location: String,
+        url: String,
+        date: String,
+        time: String,
+        field: String
+    ) {
         val marker = Marker()
         marker.position = LatLng(latitude, longitude)
         marker.map = naverMap
-        marker.icon = MarkerIcons.BLACK
-        marker.captionText = title
 
-        marker.setOnClickListener {
+        // 마커 아이콘을 설정
+        val icon = OverlayImage.fromResource(R.drawable.markericon)
+        marker.icon = icon
 
-            fullsizeBottomSheetEvent()
+        // 마커에 추가 정보를 저장
+        val markerWithInfo = MarkerWithInfo(title, location, url, date, time, field)
+        Log.d("MarkerInfo", "Title: $title, Location: $location, URL: $url, Date: $date, Time: $time, Field: $field")
+        marker.setTag(markerWithInfo)
+
+        marker.setOnClickListener { clickedMarker ->
+            // 클릭 이벤트 핸들러에서 추가 정보를 가져와 사용
+            val clickedMarkerInfo = (clickedMarker.tag as? MarkerWithInfo)?.copy()
+            clickedMarkerInfo?.let { info ->
+                Log.d("ClickedMarkerInfo", "Title: ${info.title}, Location: ${info.location}, URL: ${info.url}, Date: ${info.date}, Time: ${info.time}, Field: ${info.field}")
+                showVolunteerInfo(info)
+                fullsizeBottomSheetEvent()
+                return@let true
+            } ?: run {
+                return@run false
+            }
         }
+
         // 마커를 리스트에 추가
         markers.add(marker)
+
+        // 중복 추가를 방지하기 위해 리스트에 없는 경우에만 추가
+        if (!markersWithInfo.contains(markerWithInfo)) {
+            markersWithInfo.add(markerWithInfo)
+        }
     }
+
+    private fun showVolunteerInfo(info: MarkerWithInfo) {
+        val titleTextView = binding.titleTextView
+        val locationTextView = binding.locationTextView
+        val urlTextView = binding.urlTextView
+        val dateTextView = binding.dateTextView
+        val timeTextView = binding.timeTextView
+        val fieldTextView = binding.fieldTextView
+
+        // MarkerWithInfo 객체에서 정보 추출
+        val title = info.title
+        val location = info.location
+        val url = info.url
+        val date = info.date
+        val time = info.time
+        val field = info.field
+
+        // TextView에 정보 설정
+        titleTextView.text = "$title"
+        locationTextView.text = "$location"
+        urlTextView.text = "$url"
+        dateTextView.text = "$date"
+        timeTextView.text = "$time"
+        fieldTextView.text = "$field"
+    }
+
+
+
 
 
     private fun removeAllMarkers() {
@@ -211,10 +307,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         markers.forEach { it.map = null }
         // 리스트 비우기
         markers.clear()
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
-    private fun fullsizeBottomSheetEvent(): Boolean {
+    private fun fullsizeBottomSheetEvent() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        return true
     }
 
     // PersistentBottomSheet 내부 버튼 click event
@@ -234,6 +330,50 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+    private fun formatDate(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+        try {
+            val date = inputFormat.parse(inputDate)
+            return outputFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return inputDate // 변환이 실패하면 원본 날짜 반환
+    }
+
+    private fun formatTime(inputTime: String): String {
+        try {
+            val inputFormat = SimpleDateFormat("H", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("H시", Locale.getDefault())
+            val time = inputFormat.parse(inputTime)
+            return outputFormat.format(time)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return inputTime // 변환이 실패하면 원본 시간 반환
+    }
+
+    private fun disableUserInput() {
+        // 사용자 입력 비활성화 로직 추가 (예: 버튼 클릭 이벤트 비활성화, 터치 이벤트 무시)
+        binding.SearchingVolunteerButton.isEnabled = false
+        // 추가로 사용자 입력을 비활성화해야 하는 경우 여기에 로직 추가
+    }
+    private fun showProgressBar() {
+        binding.loadingLayout.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.loadingLayout.visibility = View.GONE
+    }
+
+    private fun enableUserInput() {
+        // 사용자 입력 활성화 로직 추가
+        binding.SearchingVolunteerButton.isEnabled = true
+        // 추가로 사용자 입력을 활성화해야 하는 경우 여기에 로직 추가
     }
 
 
