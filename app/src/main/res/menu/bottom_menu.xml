@@ -5,14 +5,14 @@
         android:id="@+id/homeNavigation"
         android:enabled="true"
         android:icon="@drawable/homeicon"
-        android:title="사용자"
+        android:title="홈"
         app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/userNavigation"
         android:enabled="true"
         android:icon="@drawable/usericon"
-        android:title="일지"
+        android:title="내활동"
         app:showAsAction="ifRoom"
         />
 

@@ -21,4 +21,9 @@ interface ApiService {
         @Query("SchCateGu") schCateGu: String,
         @Query("progrmSj") progrmSj: HomeFragment.MarkerWithInfo
     ): Response<OpenApiResponse>
+
+
+
+
+
 }

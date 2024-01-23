@@ -1,14 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="910dp"
     tools:context=".Fragment.UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/myvolunteerbox" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/usertopbar"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="435dp"
+        android:src="@drawable/volunteerrecordbox" />
+
+    <ImageView
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="335dp"
+        android:layout_marginTop="705dp"
+        android:src="@drawable/addicon" />
+
+    <TextView
+        android:layout_width="202dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="115dp"
+        android:layout_marginLeft="160dp"
+        android:text="총 봉사 횟수는 0회 입니다."
+        android:textSize="18dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:textSize="10dp"
+        android:text="대면       0회"
+        android:layout_marginTop="160dp"
+        android:layout_marginLeft="160dp"
+        />
+    <TextView
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:textSize="10dp"
+        android:text="비대면   0회"
+        android:layout_marginTop="175dp"
+        android:layout_marginLeft="160dp"
+        />
+    <TextView
+        android:layout_width="74dp"
+        android:layout_height="22dp"
+        android:textSize="15dp"
+        android:text="획득한 뱃지"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="40dp"
+        />
+
+    <TextView
+        android:layout_width="82dp"
+        android:layout_height="25dp"
+        android:textSize="20dp"
+        android:text="나의봉사"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="25dp"
+        />
+
+    <TextView
+        android:layout_width="82dp"
+        android:layout_height="25dp"
+        android:textSize="20dp"
+        android:text="봉사 기록"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="25dp"
+        />
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="12dp"
+        android:textSize="8dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="110dp"
+        android:text="하단 봉사 기록 신청 버튼 -> 신청 -> 승인 후 집계됩니다."
+        android:textColor="#959595"
+        />
+
+
+</RelativeLayout>

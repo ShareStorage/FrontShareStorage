@@ -38,10 +38,6 @@
         <activity
             android:name=".Fragment.RankingFragment"
             android:exported="false" />
-        <activity
-            android:name=".Fragment.MarkerDetailsFragment"
-            android:exported="false"
-            />
     </application>
 
 </manifest>

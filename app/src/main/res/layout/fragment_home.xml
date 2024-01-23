@@ -59,7 +59,7 @@
             android:layout_height="300dp"
             android:background="@drawable/background_bottom_sheet"
             app:behavior_hideable="true"
-            app:behavior_peekHeight="25dp"
+            app:behavior_peekHeight="0dp"
             android:orientation="vertical"
             android:padding="10dp"
             android:clickable="true"
