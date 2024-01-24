@@ -2,4 +2,12 @@
     <string name="app_name">FrontShareStorage</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="signuptitle_string"> </string>
+    <string name="____string">기록</string>
+    <string name="volunteertitletextview_string">봉사 제목</string>
+    <string name="volunteerlocationtextview_string">봉사 장소</string>
+    <string name="volunteerdatetextview_string">봉사 날짜</string>
+    <string name="volunteerstarttimetextview_string">봉사 시작 시간</string>
+    <string name="volunteerendtimetextview_string">봉사 종료 시간</string>
 </resources>
