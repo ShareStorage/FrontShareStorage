@@ -299,9 +299,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-
-
-
     private fun removeAllMarkers() {
         // 리스트에 있는 모든 마커 제거
         markers.forEach { it.map = null }

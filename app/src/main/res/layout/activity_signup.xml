@@ -1,0 +1,316 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout android:id="@+id/content_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout android:id="@+id/signup_frame"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <View   android:id="@+id/signup_view"
+                android:background="@color/white"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_width="410dp"
+                android:layout_height="910dp" />
+
+            <RelativeLayout android:id="@+id/signup_frame2"
+                android:layout_marginTop="230dp"
+                android:layout_marginStart="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <View   android:id="@+id/signup_view2"
+                    android:background="@drawable/signup_background_shape"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="380dp"
+                    android:layout_height="510dp" />
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupTitleBar"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <View   android:id="@+id/signupTitleBarView"
+                    android:background="@drawable/rectangle_shape"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="412dp"
+                    android:layout_height="42dp" />
+
+                <ImageView android:id="@+id/signupBackImage"
+                    android:src="@drawable/backimage"
+                    android:contentDescription="signupbackimage"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="33dp"
+                    android:layout_height="34dp" />
+
+                <TextView android:id="@+id/signupTitleText"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="172dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_width="70dp"
+                    android:layout_height="27.8dp"
+                    android:text="@string/signupTitleText_string" />
+
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupProfile"
+                android:layout_marginTop="75dp"
+                android:layout_marginStart="145dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <View   android:id="@+id/signupProfileImage"
+                    android:background="@drawable/signup_profile_shape"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp" />
+
+                <ImageView android:id="@+id/signupCameraButton"
+                    android:src="@drawable/camerabtn"
+                    android:contentDescription="signupcamerabtn"
+                    android:layout_marginStart="79dp"
+                    android:layout_marginTop="92dp"
+                    android:layout_width="41dp"
+                    android:layout_height="31dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupNameFrame"
+                android:layout_marginTop="260dp"
+                android:layout_marginStart="52dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView android:id="@+id/signupNameTextview"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="43.5dp"
+                    android:layout_height="21.5dp"
+                    android:text="@string/signupNameTextview_string" />
+
+                <EditText
+                    android:id="@+id/nameEditText"
+                    android:layout_width="95dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/edittext_shape"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupEmailFrame"
+                android:layout_marginTop="335dp"
+                android:layout_marginStart="52dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout android:id="@+id/signupCheckButton"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="255dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/signupCheckView2"
+                        android:background="@drawable/signup_detail_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="61dp"
+                        android:layout_height="27dp" />
+
+                    <TextView android:id="@+id/signupCheckText"
+                        android:textSize="11sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_width="53.1dp"
+                        android:layout_height="16.1dp"
+                        android:text="@string/signupCheckText_string" />
+
+                </RelativeLayout>
+
+                <TextView android:id="@+id/signupEmailTextView"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="62.5dp"
+                    android:layout_height="22.5dp"
+                    android:text="@string/signupEmailTextview_string" />
+
+                <EditText
+                    android:id="@+id/signupEmailEditText"
+                    android:layout_width="242dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/edittext_shape"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupNickNameFrame"
+                android:layout_marginTop="410dp"
+                android:layout_marginStart="53dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView android:id="@+id/signupNickNameTextview"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="63.6dp"
+                    android:layout_height="21.6dp"
+                    android:text="@string/signupNicknameTextview_string" />
+
+                <EditText
+                    android:id="@+id/signupNickNameEditText"
+                    android:layout_width="141dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/edittext_shape"
+                    android:gravity="center" />
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupPhoneFrame"
+                android:layout_marginTop="485dp"
+                android:layout_marginStart="53dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView android:id="@+id/signupPhoneTextView"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="76.6dp"
+                    android:layout_height="21.6dp"
+                    android:text="@string/signupPhoneTextview_string"
+                    />
+
+                <EditText
+                    android:id="@+id/signupPhoneEditText"
+                    android:layout_width="141dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/edittext_shape"
+                    android:gravity="center" />
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupPasswordFrame"
+                android:layout_marginTop="560dp"
+                android:layout_marginStart="53dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView android:id="@+id/signupPasswordTextView"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="76.6dp"
+                    android:layout_height="21.6dp"
+                    android:text="@string/signupPasswordTextview_string"
+                    />
+
+                <EditText
+                    android:id="@+id/signupPasswordEditText"
+                    android:layout_width="315dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/edittext_shape"
+                    android:gravity="center" />
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/signupDetailFrame"
+                android:layout_marginTop="640dp"
+                android:layout_marginStart="47dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <View   android:id="@+id/signupDetailBarView"
+                    android:background="@drawable/signup_detail_shape"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="316dp"
+                    android:layout_height="47dp" />
+
+                <TextView android:id="@+id/signupDetailText"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="307dp"
+                    android:layout_height="27dp"
+                    android:textSize="10dp"
+                    android:text="@string/signupDetailText_string"
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout android:id="@+id/signupSaveButtonFrame"
+                android:layout_marginTop="802dp"
+                android:layout_marginStart="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <View   android:id="@+id/signupSaveBarView"
+                    android:background="@drawable/rectangle_shape"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="412dp"
+                    android:layout_height="40dp" />
+
+
+                <RelativeLayout android:id="@+id/signupSaveTextFrame"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView android:id="@+id/signupSaveTextView"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="120dp"
+                        android:layout_height="29dp"
+                        android:text="@string/signupSaveText_string"
+                        />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.frontsharestorage.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.frontsharestorage.R
@@ -16,18 +17,32 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var bnv_main: BottomNavigationView // bnv_main을 선언
 
+    private var userID : Int = 0
+    private var userEmail : String = ""
+    private var userName : String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        userID = intent.getIntExtra("userID", 0)
+        userEmail = intent.getStringExtra("userEmail").toString()
+        userName = intent.getStringExtra("userName").toString()
 
-        /////dwadawdwadawdwadwadwa
-        ///wadawdawdwadwadawdawdwadaw
+        Log.d("메인에서 userID", userID.toString())
+        Log.d("메인에서 userEmail", userEmail)
+        Log.d("메인에서 userName", userName)
 
         bnv_main = findViewById(R.id.bottom_navigationview)
 
         bnv_main.setOnItemSelectedListener { item ->
+            val args = Bundle()
+
+            args.putInt("userID", userID)
+            args.putString("userEmail", userEmail)
+            args.putString("userName", userName)
+
             changeFragment(
                 when (item.itemId) {
                     R.id.homeNavigation -> {
@@ -53,9 +68,10 @@ class MainActivity : AppCompatActivity() {
                         )
 
                         val fragment = UserFragment()
-                        val bundle = Bundle()
 
-                        fragment
+                        fragment.apply {
+                            arguments = args
+                        }
 
                     }
 

@@ -30,6 +30,15 @@
             />
 
         <activity
+            android:name=".User.SignUpActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".User.LoginActivity"
+            android:exported="false" />
+
+
+        <activity
             android:name=".Fragment.HomeFragment"
             android:exported="false" />
         <activity

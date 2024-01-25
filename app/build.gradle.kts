@@ -61,6 +61,8 @@ dependencies {
     implementation("com.naver.maps:map-sdk:3.17.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    // 구글 로그인
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
 
     //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")

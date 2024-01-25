@@ -9,7 +9,6 @@
             android:layout_height="wrap_content" >
 
 
-
             <RelativeLayout android:id="@+id/page_alertdialog_ek1"
                 android:layout_marginTop="0dp"
                 android:layout_marginStart="0dp"
@@ -22,7 +21,7 @@
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
                     android:layout_width="358dp"
-                    android:layout_height="413dp" />
+                    android:layout_height="460dp" />
 
 
                 <RelativeLayout android:id="@+id/frame_16"
@@ -69,19 +68,18 @@
                     android:layout_height="wrap_content"
                     >
 
-
                     <View   android:id="@+id/recordalertdialogbox"
                         android:background="@drawable/recordalertdialogbox_shape"
                         android:layout_marginStart="0dp"
                         android:layout_marginTop="0dp"
                         android:layout_width="338dp"
-                        android:layout_height="351dp" />
+                        android:layout_height="401dp" />
 
                 </RelativeLayout>
 
 
                 <RelativeLayout android:id="@+id/frame_14"
-                    android:layout_marginTop="356dp"
+                    android:layout_marginTop="406dp"
                     android:layout_marginStart="150dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,9 +153,26 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout android:id="@+id/frame_1233"
+                    android:layout_marginTop="164dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView android:id="@+id/volunteerDetailTextview"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="-3dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteerDetailTextview_string"
+                        />
+
+                </RelativeLayout>
 
                 <RelativeLayout android:id="@+id/frame_11"
-                    android:layout_marginTop="165dp"
+                    android:layout_marginTop="265dp"
                     android:layout_marginStart="24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -176,7 +191,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_10"
-                    android:layout_marginTop="230dp"
+                    android:layout_marginTop="330dp"
                     android:layout_marginStart="24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,7 +211,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_9"
-                    android:layout_marginTop="230dp"
+                    android:layout_marginTop="330dp"
                     android:layout_marginStart="162dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,8 +236,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
-
-
                     <View   android:id="@+id/volunteertitleeditbox"
                         android:background="@drawable/volunteertitleeditbox_shape"
                         android:layout_marginStart="0dp"
@@ -241,15 +254,12 @@
 
                 </RelativeLayout>
 
-
-
                 <RelativeLayout android:id="@+id/frame_7"
                     android:layout_marginTop="132dp"
                     android:layout_marginStart="24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
-
 
                     <View   android:id="@+id/volunteerlocationeditbox"
                         android:background="@drawable/volunteerlocationeditbox_shape"
@@ -270,8 +280,34 @@
                 </RelativeLayout>
 
 
-                <RelativeLayout android:id="@+id/frame_6"
+                <RelativeLayout android:id="@+id/frame_555"
                     android:layout_marginTop="185dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/volunteerDetailEditbox"
+                        android:background="@drawable/volunteerlocationeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="305dp"
+                        android:layout_height="75dp" />
+
+                    <EditText
+                        android:id="@+id/volunteerDetailEditText"
+                        android:layout_width="305dp"
+                        android:layout_height="93dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="-14dp"
+                        android:background="@null"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_6"
+                    android:layout_marginTop="285dp"
                     android:layout_marginStart="68dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -298,7 +334,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_5"
-                    android:layout_marginTop="245dp"
+                    android:layout_marginTop="345dp"
                     android:layout_marginStart="62dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -325,7 +361,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_4"
-                    android:layout_marginTop="245dp"
+                    android:layout_marginTop="345dp"
                     android:layout_marginStart="196dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -351,7 +387,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_3"
-                    android:layout_marginTop="179dp"
+                    android:layout_marginTop="279dp"
                     android:layout_marginStart="24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -369,7 +405,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_2"
-                    android:layout_marginTop="242dp"
+                    android:layout_marginTop="342dp"
                     android:layout_marginStart="24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -387,7 +423,7 @@
 
 
                 <RelativeLayout android:id="@+id/frame_1"
-                    android:layout_marginTop="242dp"
+                    android:layout_marginTop="342dp"
                     android:layout_marginStart="161dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
