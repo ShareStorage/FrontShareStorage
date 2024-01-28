@@ -3,10 +3,7 @@ package com.example.frontsharestorage.Fragment
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
-import android.telecom.Call
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,20 +14,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.example.frontsharestorage.Account.ResponseAccountDTO
-import com.example.frontsharestorage.Activity.MainActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.frontsharestorage.DTO.RetrofitManager
-import com.example.frontsharestorage.Fragment.Record.RecordDTO
-import com.example.frontsharestorage.Fragment.Record.ResponseRecordDTO
+import com.example.frontsharestorage.DTO.VolunteerAdapter
+import com.example.frontsharestorage.DTO.VolunteerData
 import com.example.frontsharestorage.R
-import com.example.frontsharestorage.User.LoginResponseDTO
-import com.example.frontsharestorage.User.ResponseDTO
-import com.example.frontsharestorage.databinding.FragmentHomeBinding
-import com.example.frontsharestorage.databinding.FragmentRankingBinding
 import com.example.frontsharestorage.databinding.FragmentUserBinding
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -49,6 +39,9 @@ class UserFragment : Fragment() {
     private lateinit var volunteerDateSelectButton: ImageView
     private var alertDialog: AlertDialog? = null
     private val retrofit = RetrofitManager.instance
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: VolunteerAdapter
 
     private var userID : Int = 0
     private var userEmail : String = ""
@@ -79,6 +72,14 @@ class UserFragment : Fragment() {
         Log.d("userFragment에서 userID",userID.toString() )
         Log.d("userFragment에서 userEmail",userEmail)
         Log.d("userFragment에서 userName",userName)
+
+
+
+
+//        recyclerView = view.findViewById(R.id.recyclerView)
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = LinearLayoutManager(context)
+
 
         binding.addButton.setOnClickListener {
             showAlertDialog()
@@ -152,7 +153,7 @@ class UserFragment : Fragment() {
 //                    Toast.makeText(context, "기록 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
 //                }
 //            })
-            
+
         }
 
         builder.setView(dialogView)
@@ -272,6 +273,9 @@ class UserFragment : Fragment() {
         timePickerDialog.show()
     }
 
+    // getVolunteerDataFromDB 함수 추가
+
+
 
     companion object {
         @JvmStatic
@@ -283,4 +287,6 @@ class UserFragment : Fragment() {
                 }
             }
     }
+
+
 }
