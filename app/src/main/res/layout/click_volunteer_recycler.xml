@@ -9,19 +9,19 @@
             android:layout_height="wrap_content" >
 
 
-            <RelativeLayout android:id="@+id/page_alertdialog_ek1"
+            <RelativeLayout android:id="@+id/volunteerInfo"
                 android:layout_marginTop="0dp"
                 android:layout_marginStart="0dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >
 
-                <View   android:id="@+id/_bg__alertdialog_ek2"
+                <View   android:id="@+id/volunteerInfo_View"
                     android:background="@drawable/_bg__alertdialog_ek2_shape"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
                     android:layout_width="358dp"
-                    android:layout_height="530dp" />
+                    android:layout_height="460dp" />
 
 
                 <RelativeLayout android:id="@+id/frame_16"
@@ -53,7 +53,7 @@
                             android:layout_marginTop="3dp"
                             android:layout_width="87.8dp"
                             android:layout_height="27.8dp"
-                            android:text="봉사 기록"
+                            android:text="봉사 정보"
                             />
 
                     </RelativeLayout>
@@ -73,58 +73,18 @@
                         android:layout_marginStart="0dp"
                         android:layout_marginTop="0dp"
                         android:layout_width="338dp"
-                        android:layout_height="470dp" />
+                        android:layout_height="401dp" />
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/cameraButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/cameraicon"
-                    android:layout_marginTop="420dp"
-                    android:layout_marginLeft="24dp"
-                    />
-                <ImageView
-                    android:id="@+id/galleryButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/galleryicon"
-                    android:layout_marginTop="420dp"
-                    android:layout_marginLeft="60dp"
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/imageinfotexbox"
-                    android:layout_marginTop="425dp"
-                    android:layout_marginLeft="105dp"
-                    />
-                <TextView
-                    android:id="@+id/imageinfoTextView"
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:text="테스트"
-                    android:layout_marginTop="425dp"
-                    android:layout_marginLeft="110dp"
-                    />
-
-                <TextView android:id="@+id/add_volunteer_photo_textview"
-                    android:textColor="@color/volunteertitletextview_color"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="400dp"
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
-                    android:text="봉사 확인서"/>
-
-                <RelativeLayout android:id="@+id/frame_14"
-                    android:layout_marginTop="476dp"
+                <RelativeLayout android:id="@+id/frame_14415"
+                    android:layout_marginTop="406dp"
                     android:layout_marginStart="100dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
 
-                    <RelativeLayout android:id="@+id/savebutton"
+                    <RelativeLayout android:id="@+id/modifyButton"
                         android:layout_marginTop="0dp"
                         android:layout_marginStart="0dp"
                         android:layout_width="wrap_content"
@@ -132,29 +92,28 @@
                         >
 
 
-                        <View   android:id="@+id/volunteerSaveButton"
+                        <View   android:id="@+id/modifyButtonView"
                             android:background="@drawable/rectangle_23_shape"
                             android:layout_marginStart="0dp"
                             android:layout_marginTop="0dp"
                             android:layout_width="69dp"
                             android:layout_height="27dp" />
 
-                        <TextView android:id="@+id/savebuttonTextView"
+                        <TextView android:id="@+id/modifyButtonText"
                             android:textSize="18sp"
                             android:textColor="@color/_bg__alertdialog_ek2_color"
                             android:layout_marginLeft="17dp"
                             android:layout_marginTop="0dp"
                             android:layout_width="51.8dp"
                             android:layout_height="29.8dp"
-                            android:text="기록"
+                            android:text="수정"
                             />
 
                     </RelativeLayout>
-
                 </RelativeLayout>
 
-                <RelativeLayout android:id="@+id/frame_162"
-                    android:layout_marginTop="476dp"
+                <RelativeLayout android:id="@+id/frame_14"
+                    android:layout_marginTop="406dp"
                     android:layout_marginStart="180dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
@@ -165,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
-                        <View android:id="@+id/closeButtonView"
+                        <View   android:id="@+id/closeButtonView"
                             android:background="@drawable/rectangle_23_shape"
                             android:layout_marginStart="0dp"
                             android:layout_marginTop="0dp"
@@ -179,8 +138,7 @@
                             android:layout_marginTop="0dp"
                             android:layout_width="51.8dp"
                             android:layout_height="29.8dp"
-                            android:text="닫기"
-                            />
+                            android:text="닫기" />
 
                     </RelativeLayout>
 
@@ -276,13 +234,12 @@
                         android:layout_marginTop="0dp"
                         android:layout_width="60dp"
                         android:layout_height="20dp"
-                        android:text="@string/volunteerstarttimetextview_string"
+                        android:text="@string/volunteertimetextview_string"
                         />
 
                 </RelativeLayout>
 
-
-                <RelativeLayout android:id="@+id/frame_9"
+                <RelativeLayout android:id="@+id/frame_9123"
                     android:layout_marginTop="330dp"
                     android:layout_marginStart="162dp"
                     android:layout_width="wrap_content"
@@ -300,6 +257,13 @@
                         />
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/frame_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="162dp"
+                    android:layout_marginTop="330dp" />
 
 
                 <RelativeLayout android:id="@+id/frame_8"
@@ -420,7 +384,7 @@
                         android:layout_height="22dp" />
 
                     <TextView
-                        android:id="@+id/volunteerStartTime"
+                        android:id="@+id/volunteerStartTimeText"
                         android:layout_width="83dp"
                         android:layout_height="22dp"
                         android:layout_marginStart="5dp"
@@ -431,8 +395,7 @@
 
                 </RelativeLayout>
 
-
-                <RelativeLayout android:id="@+id/frame_4"
+                <RelativeLayout android:id="@+id/frame_66"
                     android:layout_marginTop="345dp"
                     android:layout_marginStart="196dp"
                     android:layout_width="wrap_content"
@@ -447,7 +410,7 @@
                         android:layout_height="22dp" />
 
                     <TextView
-                        android:id="@+id/volunteerEndTime"
+                        android:id="@+id/volunteerEndTimeText"
                         android:layout_width="83dp"
                         android:layout_height="22dp"
                         android:layout_marginStart="5dp"
@@ -456,6 +419,13 @@
                         />
 
                 </RelativeLayout>
+
+                <RelativeLayout android:id="@+id/frame_4"
+                    android:layout_marginTop="345dp"
+                    android:layout_marginStart="196dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
 
                 <RelativeLayout android:id="@+id/frame_3"

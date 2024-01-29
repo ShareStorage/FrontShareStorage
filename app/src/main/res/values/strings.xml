@@ -30,5 +30,8 @@
     <string name="volunteerstarttimetextview_string">봉사 시작 시간</string>
     <string name="volunteerendtimetextview_string">봉사 종료 시간</string>
 
+    <string name="volunteertimetextview_string">봉사 시간</string>
+
+
 
 </resources>
