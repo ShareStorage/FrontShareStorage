@@ -1,9 +1,15 @@
 package com.example.frontsharestorage.Fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +20,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontsharestorage.DTO.RetrofitManager
@@ -49,10 +56,10 @@ class UserFragment : Fragment() {
     private lateinit var volunteerAdapter: VolunteerAdapter
     private var volunteerList : MutableList<VolunteerData> = mutableListOf()
 
+
     private var userID : Int = 0
     private var userEmail : String = ""
     private var userName : String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -73,7 +80,7 @@ class UserFragment : Fragment() {
         userID = args?.getInt("userID", 0)!!
         userEmail = args?.getString("userEmail")!!
         userName = args?.getString("userName")!!
-        searchRecordData(userID)
+        //searchRecordData(userID)
 
         Log.d("userFragment에서 userID",userID.toString() )
         Log.d("userFragment에서 userEmail",userEmail)
@@ -83,7 +90,7 @@ class UserFragment : Fragment() {
 //        recyclerView.adapter = adapter
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        initializeViews()
+        //initializeViews()
 
         binding.addButton.setOnClickListener {
             showAlertDialog()
@@ -118,15 +125,17 @@ class UserFragment : Fragment() {
 
         val volunteerCameraButtonAlert = dialogView.findViewById<ImageView>(R.id.cameraButton)
         val volunteerGalleryButtonAlert = dialogView.findViewById<ImageView>(R.id.galleryButton)
-        val volunteerImageInfoTextViewAlert = dialogView.findViewById<ImageView>(R.id.imageinfoTextView)
+        val volunteerImageInfoTextViewAlert = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
 
         volunteerCameraButtonAlert.setOnClickListener {
             // 카메라 버튼 클릭 시 이미지 촬영 가능하게
+
 
         }
 
         volunteerGalleryButtonAlert.setOnClickListener {
             // 갤러리 버튼 클릭 시 갤러리에서 이미지 가져오는거 가능하게
+
         }
 
         volunteerDateSelectButtonAlert.setOnClickListener {
@@ -144,38 +153,39 @@ class UserFragment : Fragment() {
         volunteerSaveButton.setOnClickListener{
 
             // 기록하기 버튼 클릭 시 데이터 서버에 저장
-            val recordTitle = volunteerTitle.text.toString()
-            val recordLocation = volunteerLocation.text.toString()
-            val recordDetail = volunteerDetail.text.toString()
-            val recordDate = volunteerDateTextViewAlert.text.toString()
-            val recordStartTime = volunteerStartTimeTextViewAlert.text.toString()
-            val recordEndTime = volunteerEndTimeTextViewAlert.text.toString()
-
-            val recordDTO = RecordDTO(userID, recordTitle, recordLocation, recordDetail, recordDate, recordStartTime, recordEndTime, null)
-            val sendRecord = retrofit.apiService.addRecord(recordDTO)
-            sendRecord.enqueue(object : Callback<ResponseDTO>{
-                override fun onResponse(call: retrofit2.Call<ResponseDTO>, response: Response<ResponseDTO>) {
-                    val responseDto = response.body()
-
-                    if (responseDto != null) {
-                        if (responseDto.response) {
-                            Toast.makeText(context, "기록 완료", Toast.LENGTH_SHORT).show()
-                            alertDialog?.dismiss()
-                            searchRecordData(userID)
-
-                        } else {
-                            Toast.makeText(context, "기록 불가능!", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: retrofit2.Call<ResponseDTO>, t: Throwable) {
-                    Log.e("API TEST", "ERROR  = ${t.message}")
-                    Toast.makeText(context, "기록 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
-                }
-            })
+//            val recordTitle = volunteerTitle.text.toString()
+//            val recordLocation = volunteerLocation.text.toString()
+//            val recordDetail = volunteerDetail.text.toString()
+//            val recordDate = volunteerDateTextViewAlert.text.toString()
+//            val recordStartTime = volunteerStartTimeTextViewAlert.text.toString()
+//            val recordEndTime = volunteerEndTimeTextViewAlert.text.toString()
+//            val recordImageURL = volunteerImageInfoTextViewAlert.text.toString()
+//
+//            val recordDTO = RecordDTO(userID, recordTitle, recordLocation, recordDetail, recordDate, recordStartTime, recordEndTime, recordImageURL, null)
+//            val sendRecord = retrofit.apiService.addRecord(recordDTO)
+//            sendRecord.enqueue(object : Callback<ResponseDTO>{
+//                override fun onResponse(call: retrofit2.Call<ResponseDTO>, response: Response<ResponseDTO>) {
+//                    val responseDto = response.body()
+//
+//                    if (responseDto != null) {
+//                        if (responseDto.response) {
+//                            Toast.makeText(context, "기록 완료", Toast.LENGTH_SHORT).show()
+//                            alertDialog?.dismiss()
+//                            searchRecordData(userID)
+//
+//                        } else {
+//                            Toast.makeText(context, "기록 불가능!", Toast.LENGTH_SHORT).show()
+//                        }
+//                    } else {
+//                        Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: retrofit2.Call<ResponseDTO>, t: Throwable) {
+//                    Log.e("API TEST", "ERROR  = ${t.message}")
+//                    Toast.makeText(context, "기록 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
+//                }
+//            })
 
         }
 
@@ -215,58 +225,58 @@ class UserFragment : Fragment() {
     }
     
     // DB에서 사용자 식별키로 기록한 기록들 가져옴
-    private fun searchRecordData(accountID : Int) {
-        volunteerList.clear()
-        val retrofit = RetrofitManager.instance
-
-        val sendRecordSearch = retrofit.apiService.searchRecordData(accountID)
-        sendRecordSearch.enqueue(object : Callback<ResponseRecordDTO> {
-            override fun onResponse(
-                call: retrofit2.Call<ResponseRecordDTO>,
-                response: Response<ResponseRecordDTO>
-            ) {
-                val responseDto = response.body()
-                if (responseDto != null) {
-                    val recordList = responseDto.recordList
-
-                    if (recordList.isNotEmpty()) {
-                        for (record in recordList) {
-                            val searchRecordID = record.recordID
-                            val searchRecordTitle = record.recordTitle.toString()
-                            val searchRecordLocation = record.recordLocation.toString()
-                            val searchRecordDetail = record.recordDetail.toString()
-                            val searchRecordDay = record.recordDay.toString()
-                            val searchRecordStartTime = record.recordStartTime.toString()
-                            val searchRecordEndTime = record.recordEndTime.toString()
-                            val searchRecordApprove = record.recordApprove
-
-                            val searchData = VolunteerData(searchRecordID!!, searchRecordTitle, searchRecordLocation, searchRecordDetail, searchRecordDay, searchRecordStartTime, searchRecordEndTime,
-                                searchRecordApprove)
-                            volunteerList.add(searchData)
-
-                            Log.d("userFragment에서 searchRecordTitle",searchRecordTitle)
-                            Log.d("userFragment에서 searchRecordLocation",searchRecordLocation)
-                            Log.d("userFragment에서 searchRecordDetail",searchRecordDetail)
-                            Log.d("userFragment에서 searchRecordDay",searchRecordDay)
-                            Log.d("userFragment에서 searchRecordStartTime",searchRecordStartTime)
-                            Log.d("userFragment에서 searchRecordStartTime",searchRecordEndTime)
-                            Log.d("userFragment에서 searchRecordApprove",searchRecordApprove.toString())
-
-                        }
-                        volunteerAdapter.notifyDataSetChanged()
-                    } else {
-                        Toast.makeText(context, "기록이 없습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: retrofit2.Call<ResponseRecordDTO>, t: Throwable) {
-                Toast.makeText(context, "검색 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+//    private fun searchRecordData(accountID : Int) {
+//        volunteerList.clear()
+//        val retrofit = RetrofitManager.instance
+//
+//        val sendRecordSearch = retrofit.apiService.searchRecordData(accountID)
+//        sendRecordSearch.enqueue(object : Callback<ResponseRecordDTO> {
+//            override fun onResponse(
+//                call: retrofit2.Call<ResponseRecordDTO>,
+//                response: Response<ResponseRecordDTO>
+//            ) {
+//                val responseDto = response.body()
+//                if (responseDto != null) {
+//                    val recordList = responseDto.recordList
+//
+//                    if (recordList.isNotEmpty()) {
+//                        for (record in recordList) {
+//                            val searchRecordID = record.recordID
+//                            val searchRecordTitle = record.recordTitle.toString()
+//                            val searchRecordLocation = record.recordLocation.toString()
+//                            val searchRecordDetail = record.recordDetail.toString()
+//                            val searchRecordDay = record.recordDay.toString()
+//                            val searchRecordStartTime = record.recordStartTime.toString()
+//                            val searchRecordEndTime = record.recordEndTime.toString()
+//                            val searchRecordApprove = record.recordApprove
+//
+//                            val searchData = VolunteerData(searchRecordID!!, searchRecordTitle, searchRecordLocation, searchRecordDetail, searchRecordDay, searchRecordStartTime, searchRecordEndTime,
+//                                searchRecordApprove)
+//                            volunteerList.add(searchData)
+//
+//                            Log.d("userFragment에서 searchRecordTitle",searchRecordTitle)
+//                            Log.d("userFragment에서 searchRecordLocation",searchRecordLocation)
+//                            Log.d("userFragment에서 searchRecordDetail",searchRecordDetail)
+//                            Log.d("userFragment에서 searchRecordDay",searchRecordDay)
+//                            Log.d("userFragment에서 searchRecordStartTime",searchRecordStartTime)
+//                            Log.d("userFragment에서 searchRecordStartTime",searchRecordEndTime)
+//                            Log.d("userFragment에서 searchRecordApprove",searchRecordApprove.toString())
+//
+//                        }
+//                        volunteerAdapter.notifyDataSetChanged()
+//                    } else {
+//                        Toast.makeText(context, "기록이 없습니다.", Toast.LENGTH_SHORT).show()
+//                    }
+//                } else {
+//                    Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: retrofit2.Call<ResponseRecordDTO>, t: Throwable) {
+//                Toast.makeText(context, "검색 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
 
     private fun showTimePickerDialogForAlertDialog(targetTextView: TextView) {
         val calendar = Calendar.getInstance()
@@ -296,9 +306,6 @@ class UserFragment : Fragment() {
         // TimePickerDialog 표시
         timePickerDialog.show()
     }
-
-    // getVolunteerDataFromDB 함수 추가
-
 
 
     companion object {
