@@ -1,9 +1,15 @@
 package com.example.frontsharestorage.Fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,13 +20,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontsharestorage.DTO.RetrofitManager
 import com.example.frontsharestorage.DTO.VolunteerAdapter
 import com.example.frontsharestorage.DTO.VolunteerData
+import com.example.frontsharestorage.Fragment.Record.RecordDTO
+import com.example.frontsharestorage.Fragment.Record.ResponseRecordDTO
 import com.example.frontsharestorage.R
+import com.example.frontsharestorage.User.ResponseDTO
 import com.example.frontsharestorage.databinding.FragmentUserBinding
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -41,12 +53,13 @@ class UserFragment : Fragment() {
     private val retrofit = RetrofitManager.instance
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: VolunteerAdapter
+    private lateinit var volunteerAdapter: VolunteerAdapter
+    private var volunteerList : MutableList<VolunteerData> = mutableListOf()
+
 
     private var userID : Int = 0
     private var userEmail : String = ""
     private var userName : String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -67,25 +80,29 @@ class UserFragment : Fragment() {
         userID = args?.getInt("userID", 0)!!
         userEmail = args?.getString("userEmail")!!
         userName = args?.getString("userName")!!
-        // searchRecordData(userID) 프래그먼트 넘어갈 때마다 기록 새로고침
+        //searchRecordData(userID)
 
         Log.d("userFragment에서 userID",userID.toString() )
         Log.d("userFragment에서 userEmail",userEmail)
         Log.d("userFragment에서 userName",userName)
 
-
-
-
 //        recyclerView = view.findViewById(R.id.recyclerView)
 //        recyclerView.adapter = adapter
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 
+        //initializeViews()
 
         binding.addButton.setOnClickListener {
             showAlertDialog()
         }
 
         return view
+    }
+    private fun initializeViews() {
+        // 아이템들을 어떻게 배열할지 정해줌
+        binding.recordRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        volunteerAdapter = VolunteerAdapter(context, volunteerList)
+        binding.recordRecyclerView.adapter = volunteerAdapter
     }
 
     @SuppressLint("MissingInflatedId")
@@ -106,6 +123,20 @@ class UserFragment : Fragment() {
         val volunteerLocation = dialogView.findViewById<EditText>(R.id.volunteerLocationEditText)
         val volunteerDetail = dialogView.findViewById<EditText>(R.id.volunteerDetailEditText)
 
+        val volunteerCameraButtonAlert = dialogView.findViewById<ImageView>(R.id.cameraButton)
+        val volunteerGalleryButtonAlert = dialogView.findViewById<ImageView>(R.id.galleryButton)
+        val volunteerImageInfoTextViewAlert = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
+
+        volunteerCameraButtonAlert.setOnClickListener {
+            // 카메라 버튼 클릭 시 이미지 촬영 가능하게
+
+
+        }
+
+        volunteerGalleryButtonAlert.setOnClickListener {
+            // 갤러리 버튼 클릭 시 갤러리에서 이미지 가져오는거 가능하게
+
+        }
 
         volunteerDateSelectButtonAlert.setOnClickListener {
             showDatePickerDialogForAlertDialog(volunteerDateTextViewAlert)
@@ -126,9 +157,11 @@ class UserFragment : Fragment() {
 //            val recordLocation = volunteerLocation.text.toString()
 //            val recordDetail = volunteerDetail.text.toString()
 //            val recordDate = volunteerDateTextViewAlert.text.toString()
-//            val recordTime = volunteerStartTimeTextViewAlert.text.toString() + "~" + volunteerEndTimeTextViewAlert.text.toString()
+//            val recordStartTime = volunteerStartTimeTextViewAlert.text.toString()
+//            val recordEndTime = volunteerEndTimeTextViewAlert.text.toString()
+//            val recordImageURL = volunteerImageInfoTextViewAlert.text.toString()
 //
-//            val recordDTO = RecordDTO(userID, recordTitle, recordLocation,recordDetail, recordDate, recordTime, null)
+//            val recordDTO = RecordDTO(userID, recordTitle, recordLocation, recordDetail, recordDate, recordStartTime, recordEndTime, recordImageURL, null)
 //            val sendRecord = retrofit.apiService.addRecord(recordDTO)
 //            sendRecord.enqueue(object : Callback<ResponseDTO>{
 //                override fun onResponse(call: retrofit2.Call<ResponseDTO>, response: Response<ResponseDTO>) {
@@ -193,6 +226,7 @@ class UserFragment : Fragment() {
     
     // DB에서 사용자 식별키로 기록한 기록들 가져옴
 //    private fun searchRecordData(accountID : Int) {
+//        volunteerList.clear()
 //        val retrofit = RetrofitManager.instance
 //
 //        val sendRecordSearch = retrofit.apiService.searchRecordData(accountID)
@@ -202,34 +236,34 @@ class UserFragment : Fragment() {
 //                response: Response<ResponseRecordDTO>
 //            ) {
 //                val responseDto = response.body()
-//                Log.d("dxawdwadawdawd", responseDto.toString())
 //                if (responseDto != null) {
 //                    val recordList = responseDto.recordList
 //
 //                    if (recordList.isNotEmpty()) {
 //                        for (record in recordList) {
+//                            val searchRecordID = record.recordID
 //                            val searchRecordTitle = record.recordTitle.toString()
 //                            val searchRecordLocation = record.recordLocation.toString()
 //                            val searchRecordDetail = record.recordDetail.toString()
 //                            val searchRecordDay = record.recordDay.toString()
-//                            val searchRecordTime = record.recordTime.toString()
-//                            val searchRecordApprove = record.recordApprove.toString()
+//                            val searchRecordStartTime = record.recordStartTime.toString()
+//                            val searchRecordEndTime = record.recordEndTime.toString()
+//                            val searchRecordApprove = record.recordApprove
 //
-//                            binding.textView.text = searchRecordTitle
-//                            binding.textView2.text = searchRecordLocation
-//                            binding.textView3.text = searchRecordDetail
-//                            binding.textView4.text = searchRecordDay
-//                            binding.textView5.text = searchRecordTime
-//                            binding.textView6.text = searchRecordApprove
+//                            val searchData = VolunteerData(searchRecordID!!, searchRecordTitle, searchRecordLocation, searchRecordDetail, searchRecordDay, searchRecordStartTime, searchRecordEndTime,
+//                                searchRecordApprove)
+//                            volunteerList.add(searchData)
 //
 //                            Log.d("userFragment에서 searchRecordTitle",searchRecordTitle)
 //                            Log.d("userFragment에서 searchRecordLocation",searchRecordLocation)
 //                            Log.d("userFragment에서 searchRecordDetail",searchRecordDetail)
 //                            Log.d("userFragment에서 searchRecordDay",searchRecordDay)
-//                            Log.d("userFragment에서 searchRecordTime",searchRecordTime)
-//                            Log.d("userFragment에서 searchRecordApprove",searchRecordApprove)
+//                            Log.d("userFragment에서 searchRecordStartTime",searchRecordStartTime)
+//                            Log.d("userFragment에서 searchRecordStartTime",searchRecordEndTime)
+//                            Log.d("userFragment에서 searchRecordApprove",searchRecordApprove.toString())
 //
 //                        }
+//                        volunteerAdapter.notifyDataSetChanged()
 //                    } else {
 //                        Toast.makeText(context, "기록이 없습니다.", Toast.LENGTH_SHORT).show()
 //                    }
@@ -272,9 +306,6 @@ class UserFragment : Fragment() {
         // TimePickerDialog 표시
         timePickerDialog.show()
     }
-
-    // getVolunteerDataFromDB 함수 추가
-
 
 
     companion object {

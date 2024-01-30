@@ -22,8 +22,14 @@ data class SearchResponseRecordDTO (
     @SerializedName("recordDay")
     val recordDay: String?,
 
-    @SerializedName("recordTime")
-    val recordTime: String?,
+    @SerializedName("recordStartTime")
+    val recordStartTime: String?,
+
+    @SerializedName("recordEndTime")
+    val recordEndTime: String?,
+
+    @SerializedName("recordImageURL")
+    val recordImageURL: String?,
 
     @SerializedName("recordApprove")
     val recordApprove: Boolean?

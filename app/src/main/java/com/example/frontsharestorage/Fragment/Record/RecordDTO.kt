@@ -6,6 +6,8 @@ data class RecordDTO (
     var recordLocation : String?,
     var recordDetail : String?,
     var recordDay : String?,
-    var recordTime : String?,
+    var recordStartTime : String?,
+    var recordEndTime : String?,
+    var recordImageURL : String?,
     var recordApprove : Boolean?
 )

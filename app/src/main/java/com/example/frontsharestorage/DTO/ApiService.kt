@@ -11,6 +11,7 @@ import com.example.frontsharestorage.User.ResponseDTO
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -49,4 +50,7 @@ interface ApiService {
 
     @GET("record/searchRecordData")
     fun searchRecordData(@Query("accountID") accountID:Int): Call<ResponseRecordDTO>
+
+    @DELETE("record/deleteRecord")
+    fun deleteRecord(@Query("recordID") recordID:Int): Call<ResponseDTO>
 }
