@@ -42,29 +42,72 @@
         android:src="@drawable/addicon" />
 
     <TextView
+        android:id="@+id/allApproveCount"
         android:layout_width="202dp"
         android:layout_height="26dp"
         android:layout_marginTop="115dp"
         android:layout_marginLeft="160dp"
-        android:text="총 봉사 횟수는 0회 입니다."
+        android:text=""
         android:textSize="18dp"
         android:textStyle="bold" />
+
     <TextView
-        android:layout_width="65dp"
-        android:layout_height="28dp"
+        android:layout_width="25dp"
+        android:layout_height="13dp"
         android:textSize="10dp"
-        android:text="대면       0회"
-        android:layout_marginTop="160dp"
+        android:text="승인  :"
+        android:layout_marginTop="150dp"
         android:layout_marginLeft="160dp"
         />
+
     <TextView
-        android:layout_width="65dp"
-        android:layout_height="28dp"
+        android:id="@+id/approveCount"
+        android:layout_width="20dp"
+        android:layout_height="13dp"
         android:textSize="10dp"
-        android:text="비대면   0회"
-        android:layout_marginTop="175dp"
+        android:text=""
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="188dp"
+        />
+
+    <TextView
+        android:layout_width="36dp"
+        android:layout_height="13dp"
+        android:textSize="10dp"
+        android:text="미승인  :"
+        android:layout_marginTop="168dp"
         android:layout_marginLeft="160dp"
         />
+
+    <TextView
+        android:id="@+id/disApproveCount"
+        android:layout_width="20dp"
+        android:layout_height="13dp"
+        android:layout_marginLeft="198dp"
+        android:layout_marginTop="168dp"
+        android:text=""
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="46dp"
+        android:layout_height="13dp"
+        android:textSize="10dp"
+        android:text="기록 횟수  :"
+        android:layout_marginTop="186dp"
+        android:layout_marginLeft="160dp"
+        />
+
+    <TextView
+
+        android:id="@+id/recordCount"
+        android:layout_width="20dp"
+        android:layout_height="13dp"
+        android:textSize="10dp"
+        android:text=""
+        android:layout_marginTop="186dp"
+        android:layout_marginLeft="208dp"
+        />
+
     <TextView
         android:layout_width="74dp"
         android:layout_height="22dp"

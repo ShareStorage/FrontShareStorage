@@ -1,12 +1,13 @@
 package com.example.frontsharestorage.DTO
 
 data class VolunteerData(
+    val accountID : Int,
     val recordID: Int,
-    val title: String,
-    val location: String,
-    val detail: String,
-    val date: String,
-    val startTime: String,
-    val endTime: String,
+    var title: String,
+    var location: String,
+    var detail: String,
+    var date: String,
+    var startTime: String,
+    var endTime: String,
     val approve: Boolean?
 )

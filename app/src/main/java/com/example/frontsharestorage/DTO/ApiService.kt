@@ -4,7 +4,9 @@ import com.example.frontsharestorage.Account.AccountDTO
 import com.example.frontsharestorage.Account.ResponseAccountDTO
 import com.example.frontsharestorage.Fragment.HomeFragment
 import com.example.frontsharestorage.Fragment.Record.RecordDTO
+import com.example.frontsharestorage.Fragment.Record.ResponseCountDTO
 import com.example.frontsharestorage.Fragment.Record.ResponseRecordDTO
+import com.example.frontsharestorage.Fragment.Record.UpdateRecordDTO
 import com.example.frontsharestorage.User.LoginDTO
 import com.example.frontsharestorage.User.LoginResponseDTO
 import com.example.frontsharestorage.User.ResponseDTO
@@ -13,6 +15,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -51,6 +54,12 @@ interface ApiService {
     @GET("record/searchRecordData")
     fun searchRecordData(@Query("accountID") accountID:Int): Call<ResponseRecordDTO>
 
+    @GET("record/recordCount")
+    fun recordCount(@Query("accountID") accountID: Int): Call<ResponseCountDTO>
+
     @DELETE("record/deleteRecord")
     fun deleteRecord(@Query("recordID") recordID:Int): Call<ResponseDTO>
+
+    @PATCH("record/updateRecord")
+    fun updateRecord(@Body updateRecordDTO: UpdateRecordDTO) : Call<ResponseDTO>
 }
