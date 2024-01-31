@@ -1,14 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.RankingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/rankingtopbar"
+        android:layout_marginTop="-5dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="650dp"
+        android:src="@drawable/rankingbox"
+        android:layout_marginTop="95dp"
+        android:layout_marginLeft="74dp"
+        />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="봉사 랭킹"
+        android:textSize="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="87dp"
+        android:textStyle="bold"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/userrankingicon"
+        android:layout_marginTop="55dp"
+        android:layout_marginLeft="25dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/searchuserbar"
+        android:layout_marginLeft="197dp"
+        android:layout_marginTop="68dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/userrankingsearchbutton"
+        android:layout_marginTop="68dp"
+        android:layout_marginLeft="350dp"
+        />
+    <TextView
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:text="위치잡는테스트중입니다"
+        android:layout_marginTop="68dp"
+        android:layout_marginLeft="201dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/goldmedalicon"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="25dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/silvermedalicon"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="165dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bronzemedalicon"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="215dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon4th"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="270dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon5th"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="325dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon6th"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="380dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon7th"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="435dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon8th"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="490dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon9th"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="545dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon10th"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="590dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon11th"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="633dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon12th"
+        android:layout_marginTop="685dp"
+        android:layout_marginLeft="19dp"
+        />
 
-</FrameLayout>
+
+</RelativeLayout>

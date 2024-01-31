@@ -1,0 +1,456 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content" >
+    <ScrollView android:id="@+id/check_volunteer_alertdialog"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout android:id="@+id/content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+
+            <RelativeLayout android:id="@+id/page_alertdialog_ek1_check"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <View   android:id="@+id/_bg__alertdialog_ek2_check"
+                    android:background="@drawable/_bg__alertdialog_ek2_shape"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="358dp"
+                    android:layout_height="460dp" />
+
+
+                <RelativeLayout android:id="@+id/frame_16_check"
+                    android:layout_marginTop="-1dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <RelativeLayout android:id="@+id/check_alertdialogtopbar"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+
+                        <View   android:id="@+id/check_signuptitlebar"
+                            android:background="@drawable/signuptitlebar_shape"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_width="358dp"
+                            android:layout_height="32dp" />
+
+                        <TextView android:id="@+id/_heck_signuptitle"
+                            android:textSize="18sp"
+                            android:textColor="@color/_bg__alertdialog_ek2_color"
+                            android:layout_marginLeft="140dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_width="87.8dp"
+                            android:layout_height="27.8dp"
+                            android:text="봉사 정보"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_15_check"
+                    android:layout_marginTop="46dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/check_alertdialogbox"
+                        android:background="@drawable/recordalertdialogbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="338dp"
+                        android:layout_height="401dp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_14_check"
+                    android:layout_marginTop="406dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <RelativeLayout android:id="@+id/check_exitbutton_layout"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+
+                        <View   android:id="@+id/check_exit_button"
+                            android:background="@drawable/rectangle_23_shape"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_width="69dp"
+                            android:layout_height="27dp" />
+
+                        <TextView android:id="@+id/check_exitbutton_textView"
+                            android:textSize="18sp"
+                            android:textColor="@color/_bg__alertdialog_ek2_color"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_width="51.8dp"
+                            android:layout_height="29.8dp"
+                            android:text="닫기"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_13_check"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    >
+
+
+                    <TextView android:id="@+id/check_volunteertitletextview"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="-3dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteertitletextview_string"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_12_check"
+                    android:layout_marginTop="111dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView android:id="@+id/check_volunteerlocationtextview"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="-3dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteerlocationtextview_string"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout android:id="@+id/frame_1233_check"
+                    android:layout_marginTop="164dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView android:id="@+id/check_volunteerDetailTextview"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="-3dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteerDetailTextview_string"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout android:id="@+id/frame_11_check"
+                    android:layout_marginTop="265dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView android:id="@+id/check_volunteerdatetext"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteerdatetextview_string"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_10_check"
+                    android:layout_marginTop="330dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+
+                    <TextView android:id="@+id/check_volunteerstarttimetextview"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteerstarttimetextview_string"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_9_check"
+                    android:layout_marginTop="330dp"
+                    android:layout_marginStart="162dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+
+                    <TextView android:id="@+id/check_volunteerendtimetextview"
+                        android:textColor="@color/volunteertitletextview_color"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:text="@string/volunteerendtimetextview_string"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_8_check"
+                    android:layout_marginTop="79dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+                    <View   android:id="@+id/check_volunteertitleeditbox"
+                        android:background="@drawable/volunteertitleeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="305dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:text="테스트"
+                        android:padding="3dp"
+                        android:id="@+id/volunteerTitleTextView"
+                        android:layout_width="305dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="2dp"
+                        android:background="@null"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout android:id="@+id/frame_7_check"
+                    android:layout_marginTop="132dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/check_volunteerlocationeditbox"
+                        android:background="@drawable/volunteerlocationeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="305dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:text="테스트"
+                        android:padding="3dp"
+                        android:id="@+id/check_volunteerLocationTextView"
+                        android:layout_width="305dp"
+                        android:layout_height="23dp"
+                        android:layout_marginStart="2dp"
+                        android:background="@null"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_555_check"
+                    android:layout_marginTop="185dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/check_volunteerDetailEditbox"
+                        android:background="@drawable/volunteerlocationeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="305dp"
+                        android:layout_height="75dp" />
+
+                    <TextView
+                        android:text="테스트"
+                        android:padding="3dp"
+                        android:id="@+id/check_volunteerDetailTextView"
+                        android:layout_width="305dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="2dp"
+                        android:background="@null"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_6_check"
+                    android:layout_marginTop="285dp"
+                    android:layout_marginStart="68dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+
+                    <View   android:id="@+id/check_volunteerdateeditbox"
+                        android:background="@drawable/volunteerdateeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_width="127dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:text="테스트"
+                        android:padding="2dp"
+                        android:id="@+id/check_volunteerDateTextView"
+                        android:layout_width="127dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="6dp"
+                        android:textSize="10sp" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_5_check"
+                    android:layout_marginTop="345dp"
+                    android:layout_marginStart="62dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/check_volunteerstarttimeeditbox"
+                        android:background="@drawable/volunteerstarttimeeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="83dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:text="테스트"
+                        android:padding="3dp"
+                        android:id="@+id/checkvolunteerStartTime"
+                        android:layout_width="83dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_4_check"
+                    android:layout_marginTop="345dp"
+                    android:layout_marginStart="196dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <View   android:id="@+id/check_volunteerendtimeeditbox"
+                        android:background="@drawable/volunteerendtimeeditbox_shape"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="83dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:text="테스트"
+                        android:padding="3dp"
+                        android:id="@+id/check_volunteerEndTime"
+                        android:layout_width="83dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="14dp"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_3_check"
+                    android:layout_marginTop="279dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView android:id="@+id/check_volunteerdateselectbutton"
+                        android:src="@drawable/volunteerdateselectbutton"
+                        android:contentDescription="volunteerdateselectbutton"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_width="33dp"
+                        android:layout_height="31.97dp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_2_check"
+                    android:layout_marginTop="342dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView android:id="@+id/check_volunteerstarttimebutton"
+                        android:src="@drawable/volunteerstarttimebutton"
+                        android:contentDescription="volunteerstarttimebutton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout android:id="@+id/frame_1_check"
+                    android:layout_marginTop="342dp"
+                    android:layout_marginStart="161dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+
+                    <ImageView android:id="@+id/check_volunteerendtimebutton"
+                        android:src="@drawable/volunteerendtimebutton"
+                        android:contentDescription="volunteerendtimebutton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+</HorizontalScrollView>
