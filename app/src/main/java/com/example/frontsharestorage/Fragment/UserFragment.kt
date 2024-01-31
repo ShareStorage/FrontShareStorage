@@ -8,7 +8,9 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,7 +22,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontsharestorage.DTO.RetrofitManager
@@ -31,10 +35,14 @@ import com.example.frontsharestorage.Fragment.Record.ResponseRecordDTO
 import com.example.frontsharestorage.R
 import com.example.frontsharestorage.User.ResponseDTO
 import com.example.frontsharestorage.databinding.FragmentUserBinding
+import com.google.firebase.storage.FirebaseStorage
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
@@ -60,6 +68,15 @@ class UserFragment : Fragment() {
     private var userID : Int = 0
     private var userEmail : String = ""
     private var userName : String = ""
+
+
+    private val PERMISSION_REQUEST_CODE = 200
+    private val CAMERA_REQUEST_CODE = 201
+    private var currentPhotoPath: String? = null
+    private val storageRef = FirebaseStorage.getInstance().reference
+    private var URL = ""
+    private var selectedImageUri: Uri? = null  // 이 부분을 추가
+    private val GALLERY_REQUEST_CODE = 202
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -127,15 +144,18 @@ class UserFragment : Fragment() {
         val volunteerGalleryButtonAlert = dialogView.findViewById<ImageView>(R.id.galleryButton)
         val volunteerImageInfoTextViewAlert = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
 
+        val imageinfoTextView = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
+
+
         volunteerCameraButtonAlert.setOnClickListener {
-            // 카메라 버튼 클릭 시 이미지 촬영 가능하게
-
-
+            checkCameraPermission()
+            volunteerImageInfoTextViewAlert.text = "업로드 완료"
         }
 
         volunteerGalleryButtonAlert.setOnClickListener {
             // 갤러리 버튼 클릭 시 갤러리에서 이미지 가져오는거 가능하게
-
+            openGallery()
+            volunteerImageInfoTextViewAlert.text = "업로드 완료"
         }
 
         volunteerDateSelectButtonAlert.setOnClickListener {
@@ -186,6 +206,11 @@ class UserFragment : Fragment() {
 //                    Toast.makeText(context, "기록 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
 //                }
 //            })
+
+            // 이미지를 Firebase Storage에 업로드
+            if (currentPhotoPath != null) {
+                uploadImageToFirebaseStorage(currentPhotoPath!!)
+            }
 
         }
 
@@ -305,6 +330,105 @@ class UserFragment : Fragment() {
 
         // TimePickerDialog 표시
         timePickerDialog.show()
+    }
+
+    private fun checkCameraPermission() {
+        Log.d("UserFragment.kt","checkCameraPermission 함수 호출")
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // 권한이 없을 경우 권한 요청
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                PERMISSION_REQUEST_CODE
+            )
+        } else {
+            // 권한이 있을 경우 카메라 열기
+            openCamera()
+        }
+    }
+
+    private fun openCamera() {
+        // 카메라 앱을 열어 사진 촬영
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            val photoFile: File = createImageFile()
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.frontsharestorage.fileprovider",
+                photoFile
+            )
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            startActivityForResult(intent, CAMERA_REQUEST_CODE)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+    }
+
+
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // 이미지 파일 이름 생성
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // 파일 경로 저장
+            currentPhotoPath = absolutePath
+        }
+    }
+
+
+    private fun uploadImageToFirebaseStorage(filePath: String) {
+        Log.d("UserFragment.kt","uploadImageToFirebaseStorage 함수 호출")
+        val file = Uri.fromFile(File(filePath))
+        val imagesRef = storageRef.child("images/${file.lastPathSegment}")
+
+        imagesRef.putFile(file)
+            .addOnSuccessListener { taskSnapshot ->
+                // 이미지 업로드 성공 시
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
+                    // 업로드된 이미지의 다운로드 URL 획득
+                    URL = uri.toString()
+                    // 여기에서 URL을 활용하여 필요한 작업 수행 가능
+                    Log.d("Firebase Storage URL", URL)
+                    // 이후에 필요한 작업 수행 가능
+                    // 예: 서버에 URL 업로드, 이미지 정보 저장 등
+                }
+            }
+            .addOnFailureListener { exception ->
+                // 이미지 업로드 실패 시
+                Log.e("Firebase Storage", "Image upload failed: ${exception.message}")
+                Toast.makeText(requireContext(), "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
+
+    // onActivityResult 메서드 추가
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 갤러리에서 이미지를 선택했을 때 처리할 내용
+            selectedImageUri = data?.data
+            // 토스트 메시지로 선택한 이미지의 Uri 확인
+            Toast.makeText(requireContext(), "Selected Image: $selectedImageUri", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 카메라로 이미지를 촬영했을 때 처리할 내용
+            // ...
+        }
     }
 
 

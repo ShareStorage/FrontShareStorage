@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217212267306",
+    "project_id": "frontsharestorage-3e6c5",
+    "storage_bucket": "frontsharestorage-3e6c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217212267306:android:9cf9de6517320d279c4c53",
+        "android_client_info": {
+          "package_name": "com.example.frontsharestorage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcyoA9tt55amElXN3eRMBfaNEEMp2xU0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
