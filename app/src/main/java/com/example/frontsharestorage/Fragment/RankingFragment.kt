@@ -1,64 +1,114 @@
 package com.example.frontsharestorage.Fragment
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.frontsharestorage.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.frontsharestorage.Account.ResponseRankingDTO
+import com.example.frontsharestorage.Account.UserRankingDTO
+import com.example.frontsharestorage.DTO.RetrofitManager
 import com.example.frontsharestorage.databinding.FragmentRankingBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private var userEmail : String = ""
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RankingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RankingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private var _binding : FragmentRankingBinding? = null
+    private val retrofit = RetrofitManager.instance
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var rankingAdapter: RankingAdapter
+    private val allUserList: ArrayList<UserRankingDTO> = ArrayList()
+    private lateinit var rankingItems: List<RankingItem>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // RecyclerView 초기화
+        recyclerView = binding.rankingRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // 어댑터 설정
+        rankingAdapter = RankingAdapter()
+        recyclerView.adapter = rankingAdapter
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ranking, container, false)
-    }
+        _binding = FragmentRankingBinding.inflate(inflater, container, false)
+        val args = arguments
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RankingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RankingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        userEmail = args?.getString("userEmail")!!
+
+        searchAllRankingData()
+        Log.d("RankingFragment에서 이메일", userEmail)
+
+        return binding.root
+    }
+    private fun searchAllRankingData() {
+
+        val sendAllRankingSearch = retrofit.apiService.searchRankingAllData()
+        sendAllRankingSearch.enqueue(object : Callback<ResponseRankingDTO> {
+            override fun onResponse(
+                call: Call<ResponseRankingDTO>,
+                response: Response<ResponseRankingDTO>
+            ) {
+                if (response.isSuccessful) {
+                    val responseDto = response.body()
+                    if (responseDto != null) {
+                        val sortedList = responseDto.rankingList.sortedWith(
+                            compareByDescending<UserRankingDTO> { it.recordCount }
+                                .thenBy { it.accountID }
+                        )
+
+                        rankingItems = sortedList.map { user ->
+                            RankingItem(
+                                nickName = user.userNickName,
+                                recordCount = user.recordCount,
+                                badge = user.badge,
+                                imageURL = user.userImageURL
+                            )
+                        }
+
+                        // 어댑터에 리스트 전달
+                        rankingAdapter.submitList(rankingItems)
+                        rankingAdapter.notifyDataSetChanged()
+
+
+                        allUserList.clear()
+                        allUserList.addAll(sortedList)
+
+                        Log.d("sortedList", allUserList.toString())
+
+                    } else {
+                        Log.d(ContentValues.TAG, "Search Response is null")
+                    }
+                } else {
+                    Log.e(ContentValues.TAG, "Search Request Failed: ${response.code()}")
                 }
             }
+            override fun onFailure(call: Call<ResponseRankingDTO>, t: Throwable) {
+                Log.e(ContentValues.TAG, "Search Request Failed: ${t.message}", t)
+            }
+        })
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
+

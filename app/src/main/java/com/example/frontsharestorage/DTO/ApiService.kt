@@ -2,6 +2,10 @@ package com.example.frontsharestorage.DTO
 
 import com.example.frontsharestorage.Account.AccountDTO
 import com.example.frontsharestorage.Account.ResponseAccountDTO
+import com.example.frontsharestorage.Account.ResponseAllDataDTO
+import com.example.frontsharestorage.Account.ResponseRankingDTO
+import com.example.frontsharestorage.Account.UpdateRankingDTO
+import com.example.frontsharestorage.Account.UserRankingDTO
 import com.example.frontsharestorage.Fragment.HomeFragment
 import com.example.frontsharestorage.Fragment.Record.RecordDTO
 import com.example.frontsharestorage.Fragment.Record.ResponseCountDTO
@@ -42,6 +46,9 @@ interface ApiService {
     @POST("account/register")
     fun register(@Body body: AccountDTO): Call<ResponseDTO>
 
+    @POST("ranking/addRanking")
+    fun addRanking(@Body body: UserRankingDTO): Call<ResponseDTO>
+
     @GET("account/searchUser")
     fun findUser(@Query("email") email:String): Call<ResponseAccountDTO>
 
@@ -62,4 +69,14 @@ interface ApiService {
 
     @PATCH("record/updateRecord")
     fun updateRecord(@Body updateRecordDTO: UpdateRecordDTO) : Call<ResponseDTO>
+
+    @PATCH("ranking/updateRanking")
+    fun updateRanking(@Body updateRankingDTO: UpdateRankingDTO) : Call<ResponseDTO>
+
+    @GET("ranking/searchRankingData")
+    fun searchRankingData(@Query("userEmail") userEmail:String): Call<ResponseRankingDTO>
+
+    @GET("ranking/allData")
+    fun searchRankingAllData(): Call<ResponseRankingDTO>
+
 }

@@ -33,27 +33,7 @@
         android:layout_marginTop="55dp"
         android:layout_marginLeft="25dp"
         />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/searchuserbar"
-        android:layout_marginLeft="197dp"
-        android:layout_marginTop="68dp"
-        />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/userrankingsearchbutton"
-        android:layout_marginTop="68dp"
-        android:layout_marginLeft="350dp"
-        />
-    <TextView
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:text="위치잡는테스트중입니다"
-        android:layout_marginTop="68dp"
-        android:layout_marginLeft="201dp"
-        />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,6 +118,15 @@
         android:layout_marginTop="685dp"
         android:layout_marginLeft="19dp"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rankingRecyclerView"
+        android:layout_width="274dp"
+        android:layout_height="640dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginStart="90dp"
+        />
+
 
 
 </RelativeLayout>

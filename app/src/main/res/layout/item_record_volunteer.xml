@@ -16,18 +16,18 @@
         android:orientation="horizontal">
         <TextView
             android:padding="5dp"
-            android:text="종로구립 지혜만들기 작은도서관 봉사활동"
+            android:text=""
             android:id="@+id/item_volunteerTitle"
-            android:textSize="13dp"
+            android:textSize="11dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginTop="-10dp"
+            android:layout_marginTop="-5dp"
             android:layout_marginLeft="-5dp"
             android:textColor="#000000" />
         <TextView
             android:id="@+id/item_volunterLocation"
-            android:text="서울 특별시 종로구 종로 19, 에이동 15층 30호(종로1가, 르메이에르종로타운)"
+            android:text=""
             android:textSize="6dp"
             android:textColor="#696969"
             android:layout_marginTop="15dp"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/item_volunteerDate"
-            android:text="2023년 12월 16일"
+            android:text=""
             android:textSize="7dp"
             android:textColor="#020783"
             android:layout_marginTop="25dp"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/item_volunteerTime"
-            android:text="15:32~23:23"
+            android:text=""
             android:textSize="7dp"
             android:textColor="#020783"
             android:layout_marginTop="35dp"

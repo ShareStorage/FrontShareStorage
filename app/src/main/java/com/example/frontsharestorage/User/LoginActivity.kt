@@ -33,6 +33,10 @@ class LoginActivity: AppCompatActivity() {
 
         val retrofit = RetrofitManager.instance
 
+
+        binding.emailEditText.setText("test1234@daum.net")
+        binding.passwordEditText.setText("1q2w3e4r!")
+
         // 로그인 버튼
         binding.loginBtn.setOnClickListener{
             val email = binding.emailEditText.text.toString()
@@ -115,11 +119,11 @@ class LoginActivity: AppCompatActivity() {
 
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // 로그인 버튼 클릭 이벤트
-        binding.googleLoginText.setOnClickListener{
-            val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
+//        // 로그인 버튼 클릭 이벤트
+//        binding.googleLoginText.setOnClickListener{
+//            val signInIntent = mGoogleSignInClient.signInIntent
+//            startActivityForResult(signInIntent, RC_SIGN_IN)
+//        }
 
     }
 

@@ -82,6 +82,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-simplexml:2.9.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
+    // gradle
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     //FireBase
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))

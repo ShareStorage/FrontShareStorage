@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@+id/allApproveCount"
-        android:layout_width="202dp"
+        android:layout_width="240dp"
         android:layout_height="26dp"
         android:layout_marginTop="115dp"
         android:layout_marginLeft="160dp"
@@ -62,7 +62,7 @@
 
     <TextView
         android:id="@+id/approveCount"
-        android:layout_width="20dp"
+        android:layout_width="40dp"
         android:layout_height="13dp"
         android:textSize="10dp"
         android:text=""
@@ -81,7 +81,7 @@
 
     <TextView
         android:id="@+id/disApproveCount"
-        android:layout_width="20dp"
+        android:layout_width="40dp"
         android:layout_height="13dp"
         android:layout_marginLeft="198dp"
         android:layout_marginTop="168dp"
@@ -100,7 +100,7 @@
     <TextView
 
         android:id="@+id/recordCount"
-        android:layout_width="20dp"
+        android:layout_width="40dp"
         android:layout_height="13dp"
         android:textSize="10dp"
         android:text=""
@@ -115,6 +115,15 @@
         android:text="획득한 뱃지"
         android:layout_marginTop="230dp"
         android:layout_marginLeft="40dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/badgerecyclerview"
+        android:layout_width="325dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginStart="40dp"
+        android:orientation="horizontal"
         />
 
     <TextView

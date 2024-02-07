@@ -100,11 +100,12 @@
                     android:layout_marginTop="425dp"
                     android:layout_marginLeft="105dp"
                     />
+
                 <TextView
                     android:id="@+id/imageinfoTextView"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:text="테스트"
+                    android:text=""
                     android:layout_marginTop="425dp"
                     android:layout_marginLeft="110dp"
                     />

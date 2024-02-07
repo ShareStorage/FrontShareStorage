@@ -32,6 +32,12 @@
 
     <string name="volunteertimetextview_string">봉사 시간</string>
 
-
+    <string name="bronze_text">브론즈</string>
+    <string name="silver_text">실버</string>
+    <string name="gold_text">골드</string>
+    <string name="emerald_text">에메랄드</string>
+    <string name="dia_text">다이아</string>
+    <string name="master_text">마스터</string>
+    <string name="challenger_text">챌린저</string>
 
 </resources>

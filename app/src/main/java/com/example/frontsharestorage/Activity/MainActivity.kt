@@ -84,9 +84,9 @@ class MainActivity : AppCompatActivity() {
                         )
 
                         val fragment = RankingFragment()
-                        val bundle = Bundle()
-
-                        fragment
+                        fragment.apply {
+                            arguments = args
+                        }
 
                     }
                 }

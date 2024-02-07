@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -31,12 +32,14 @@ import androidx.core.content.FileProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.frontsharestorage.Account.UpdateRankingDTO
 import com.example.frontsharestorage.DTO.RetrofitManager
 import com.example.frontsharestorage.DTO.VolunteerAdapter
 import com.example.frontsharestorage.DTO.VolunteerData
 import com.example.frontsharestorage.Fragment.Record.RecordDTO
 import com.example.frontsharestorage.Fragment.Record.ResponseCountDTO
 import com.example.frontsharestorage.Fragment.Record.ResponseRecordDTO
+import com.example.frontsharestorage.Fragment.Record.UpdateRecordDTO
 import com.example.frontsharestorage.Fragment.Record.recordCountOBJ
 import com.example.frontsharestorage.R
 import com.example.frontsharestorage.User.ResponseDTO
@@ -72,7 +75,7 @@ class UserFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var volunteerAdapter: VolunteerAdapter
     private var volunteerList : MutableList<VolunteerData> = mutableListOf()
-
+    private lateinit var imageinfoTextView: TextView
 
     private var userID : Int = 0
     private var userEmail : String = ""
@@ -86,6 +89,11 @@ class UserFragment : Fragment() {
     private var URL = ""
     private var selectedImageUri: Uri? = null  // 이 부분을 추가
     private val GALLERY_REQUEST_CODE = 202
+
+    private var userVolunteerCount : Int = 0
+    private lateinit var badgeRecyclerView: RecyclerView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -107,16 +115,13 @@ class UserFragment : Fragment() {
         userEmail = args?.getString("userEmail")!!
         userName = args?.getString("userName")!!
         searchRecordData(userID)
+        approveCount(userID)
+        updateRanking(userID)
 
+        // 뱃지 리사이클러뷰 초기화
+        badgeRecyclerView = view.findViewById(R.id.badgerecyclerview)
+        setupBadgeRecyclerView()
         recordCountOBJ.recordCount(userID, binding, requireContext())
-
-        Log.d("userFragment에서 userID",userID.toString() )
-        Log.d("userFragment에서 userEmail",userEmail)
-        Log.d("userFragment에서 userName",userName)
-
-//        recyclerView = view.findViewById(R.id.recyclerView)
-//        recyclerView.adapter = adapter
-//        recyclerView.layoutManager = LinearLayoutManager(context)
 
         initializeViews()
 
@@ -153,23 +158,21 @@ class UserFragment : Fragment() {
 
         val volunteerCameraButtonAlert = dialogView.findViewById<ImageView>(R.id.cameraButton)
         val volunteerGalleryButtonAlert = dialogView.findViewById<ImageView>(R.id.galleryButton)
-        val volunteerImageInfoTextViewAlert = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
+        val volunteerCloseButtonAlert = dialogView.findViewById<View>(R.id.closeButtonView)
+        //val volunteerImageInfoTextViewAlert = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
 
-        val imageinfoTextView = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
+        imageinfoTextView = dialogView.findViewById<TextView>(R.id.imageinfoTextView)
 
 
         volunteerCameraButtonAlert.setOnClickListener {
-
             // 카메라 버튼 클릭 시 이미지 촬영 가능하게
             checkCameraPermission()
-            volunteerImageInfoTextViewAlert.text = "업로드 완료"
         }
 
         volunteerGalleryButtonAlert.setOnClickListener {
             // 갤러리 버튼 클릭 시 갤러리에서 이미지 가져오는거 가능하게
-
             openGallery()
-            volunteerImageInfoTextViewAlert.text = "업로드 완료"
+            //volunteerImageInfoTextViewAlert.text = "업로드 완료"
         }
 
         volunteerDateSelectButtonAlert.setOnClickListener {
@@ -185,7 +188,6 @@ class UserFragment : Fragment() {
         }
 
         volunteerSaveButton.setOnClickListener{
-
             // 기록하기 버튼 클릭 시 데이터 서버에 저장
             val recordTitle = volunteerTitle.text.toString()
             val recordLocation = volunteerLocation.text.toString()
@@ -193,46 +195,139 @@ class UserFragment : Fragment() {
             val recordDate = volunteerDateTextViewAlert.text.toString()
             val recordStartTime = volunteerStartTimeTextViewAlert.text.toString()
             val recordEndTime = volunteerEndTimeTextViewAlert.text.toString()
-            val recordImageURL = volunteerImageInfoTextViewAlert.text.toString()
-
-            val recordDTO = RecordDTO(userID, recordTitle, recordLocation, recordDetail, recordDate, recordStartTime, recordEndTime, recordImageURL, false)
-            val sendRecord = retrofit.apiService.addRecord(recordDTO)
-            sendRecord.enqueue(object : Callback<ResponseDTO> {
-                override fun onResponse(call: retrofit2.Call<ResponseDTO>, response: Response<ResponseDTO>) {
-                    val responseDto = response.body()
-
-                    if (responseDto != null) {
-                        if (responseDto.response) {
-                            Toast.makeText(context, "기록 완료", Toast.LENGTH_SHORT).show()
-                            alertDialog?.dismiss()
-                            searchRecordData(userID)
-                            recordCountOBJ.recordCount(userID, binding, requireContext())
-
-                        } else {
-                            Toast.makeText(context, "기록 불가능!", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: retrofit2.Call<ResponseDTO>, t: Throwable) {
-                    Log.e("API TEST", "ERROR  = ${t.message}")
-                    Toast.makeText(context, "기록 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            var recordDTO: RecordDTO? = null
 
             // 이미지를 Firebase Storage에 업로드
             if (currentPhotoPath != null) {
                 uploadImageToFirebaseStorage(currentPhotoPath!!)
+                recordDTO = RecordDTO(userID, recordTitle, recordLocation, recordDetail, recordDate, recordStartTime, recordEndTime, URL, false)
+            }
+            else if (selectedImageUri != null){
+                recordDTO = RecordDTO(userID, recordTitle, recordLocation, recordDetail, recordDate, recordStartTime, recordEndTime, selectedImageUri.toString(), false)
+
             }
 
+            recordDTO?.let{
+                val sendRecord = retrofit.apiService.addRecord(recordDTO)
+                sendRecord.enqueue(object : Callback<ResponseDTO> {
+                    override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                        val responseDto = response.body()
+
+                        if (responseDto != null) {
+                            if (responseDto.response) {
+                                Toast.makeText(context, "기록 완료", Toast.LENGTH_SHORT).show()
+                                alertDialog?.dismiss()
+                                searchRecordData(userID)
+                                recordCountOBJ.recordCount(userID, binding, requireContext())
+
+                            } else {
+                                Toast.makeText(context, "기록 불가능!", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                        Log.e("API TEST", "ERROR  = ${t.message}")
+                        Toast.makeText(context, "기록 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
+
+        volunteerCloseButtonAlert.setOnClickListener {
+            alertDialog?.dismiss()
         }
 
         builder.setView(dialogView)
         alertDialog = builder.create()
         alertDialog!!.show()
 
+    }
+
+
+    private fun updateRanking(accountID: Int){
+        val updateRankingDTO = UpdateRankingDTO(accountID, 0, "브론즈")
+        val sendUpdateRanking = retrofit.apiService.updateRanking(updateRankingDTO)
+
+        sendUpdateRanking.enqueue(object : Callback<ResponseDTO> {
+            override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                val responseDto = response.body()
+
+                if (responseDto != null) {
+                    if (responseDto.response) {
+                        Log.d("수정 성공", "수정이 완료")
+                    } else {
+                        Toast.makeText(context, "삭제 불가능!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                Toast.makeText(context, "수정 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+
+    private fun approveCount(accountID: Int)
+    {
+        val sendRecordCount = retrofit.apiService.recordCount(accountID)
+        sendRecordCount.enqueue(object : Callback<ResponseCountDTO> {
+            override fun onResponse(
+                call: Call<ResponseCountDTO>,
+                response: Response<ResponseCountDTO>
+            ) {
+                val responseDto = response.body()
+                if (responseDto != null) {
+                    if (responseDto.response) {
+
+                        userVolunteerCount = responseDto.approveCount
+                        Log.d("테스트", userVolunteerCount.toString())
+                        setupBadgeRecyclerView()
+                        recordCountOBJ.recordCount(userID, binding, requireContext())
+
+                    } else {
+                        Toast.makeText(context, "기록 횟수 띄우기 불가능!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "서버 응답이 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCountDTO>, t: Throwable) {
+                Toast.makeText(context, "검색 불가능 네트워크 에러!", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    private val badgeList: List<String> by lazy {
+        // 뱃지 개수를 userVolunteerCount 따라 설정
+        val badgeCount = when {
+            userVolunteerCount >= 1000 -> 7
+            userVolunteerCount >= 600 -> 6
+            userVolunteerCount >= 300 -> 5
+            userVolunteerCount >= 100 -> 4
+            userVolunteerCount >= 30 -> 3
+            userVolunteerCount >= 10 -> 2
+            userVolunteerCount >= 1 -> 1
+            else -> 0
+        }
+
+        List(badgeCount) { "Badge $it" }
+    }
+
+    private fun setupBadgeRecyclerView() {
+        if (userVolunteerCount > 0) {
+            badgeRecyclerView.visibility = View.VISIBLE
+            badgeRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            badgeRecyclerView.adapter = BadgeAdapter(badgeList)
+        } else {
+            badgeRecyclerView.visibility = View.GONE
+        }
     }
 
     private fun showDatePickerDialogForAlertDialog(volunteerDateTextView: TextView) {
@@ -310,8 +405,6 @@ class UserFragment : Fragment() {
             }
         })
     }
-
-
 
     private fun showTimePickerDialogForAlertDialog(targetTextView: TextView) {
         val calendar = Calendar.getInstance()
@@ -409,6 +502,8 @@ class UserFragment : Fragment() {
                     URL = uri.toString()
                     // 여기에서 URL을 활용하여 필요한 작업 수행 가능
                     Log.d("Firebase Storage URL", URL)
+                    //imageinfoTextView.text = "업로드 완료"
+                    //volunteerImageInfoTextViewAlert.text = "업로드 완료"
                     // 이후에 필요한 작업 수행 가능
                     // 예: 서버에 URL 업로드, 이미지 정보 저장 등
                 }
@@ -435,9 +530,25 @@ class UserFragment : Fragment() {
             selectedImageUri = data?.data
             // 토스트 메시지로 선택한 이미지의 Uri 확인
             Toast.makeText(requireContext(), "Selected Image: $selectedImageUri", Toast.LENGTH_SHORT).show()
+            try {
+                val photoFile: File = createImageFile()
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "com.example.frontsharestorage.fileprovider",
+                    photoFile
+                )
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
+            if (currentPhotoPath != null) {
+                uploadImageToFirebaseStorage(currentPhotoPath!!)
+            }
+
+            imageinfoTextView.text = "업로드 완료"
         } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            imageinfoTextView.text = "업로드 완료"
             // 카메라로 이미지를 촬영했을 때 처리할 내용
-            // ...
         }
     }
 

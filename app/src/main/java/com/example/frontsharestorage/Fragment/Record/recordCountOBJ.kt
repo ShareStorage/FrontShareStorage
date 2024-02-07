@@ -23,6 +23,7 @@ object recordCountOBJ {
                 val responseDto = response.body()
                 if (responseDto != null) {
                     if (responseDto.response) {
+
                         binding.allApproveCount.text = "총 봉사 횟수는 " + responseDto.approveCount.toString() + "회 입니다."
                         binding.approveCount.text = responseDto.approveCount.toString() + "회"
                         binding.disApproveCount.text = responseDto.disApproveCount.toString() + "회"
